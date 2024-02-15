@@ -483,6 +483,32 @@ namespace Math {
         return normalize(Matrix<T, N, M>(mat));
     }
 // #include "vectoralias.hpp"
+    // Generic
+    template<typename T, address N>
+    using Vector = Matrix<T, N, 1>;
+    template<typename T>
+    using Vec2 = Vector<T, 2>;
+    template<typename T>
+    using Vec3 = Vector<T, 3>;
+    template<typename T>
+    using Vec4 = Vector<T, 4>;
+    // Float
+    using Vec2f = Vec2<float>;
+    using Vec3f = Vec3<float>;
+    using Vec4f = Vec4<float>;
+    // Double
+    using Vec2d = Vec2<double>;
+    using Vec3d = Vec3<double>;
+    using Vec4d = Vec4<double>;
+    // Int
+    using Vec2i = Vec2<int32>;
+    using Vec3i = Vec3<int32>;
+    using Vec4i = Vec4<int32>;
+    // Uint
+    using Vec2u = Vec2<uint32>;
+    using Vec3u = Vec3<uint32>;
+    using Vec4u = Vec4<uint32>;
+// #include "vectorfunc.hpp"
     // Dot
     template<typename T, address N>
     T dot(const Vector<T, N>& v) {
@@ -500,30 +526,5 @@ namespace Math {
     template<typename T>
     Vec3<T> cross(const Vec3<T>& v1, const Vec3<T>& v2) {
         return Vec3<T>(v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x);
-    }
-// #include "vectorfunc.hpp"
-    // Length
-    template<typename T, address N, address M>
-    T length(const Matrix<T, N, M>& mat) {
-        T out = 0;
-        for (address i = 0; i < N * M; ++i) {
-            out += mat.at(i) * mat.at(i);
-        }
-        return sqrt(out);
-    }
-    // Dist
-    template<typename T, address N, address M>
-    T distance(const Matrix<T, N, M>& mat1, const Matrix<T, N, M>& mat2) {
-        return length(mat2 - mat1);
-    }
-    // Normalize
-    template<typename T, address N, address M>
-    Matrix<T, N, M>& normalize(Matrix<T, N, M>& mat) {
-        mat /= length(mat);
-        return mat;
-    }
-    template<typename T, address N, address M>
-    Matrix<T, N, M> normalized(const Matrix<T, N, M>& mat) {
-        return normalize(Matrix<T, N, M>(mat));
     }
 }
