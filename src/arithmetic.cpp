@@ -21,19 +21,6 @@ namespace Math {
     double abs(double x) {
         return x < 0 ? -x : x;
     }
-    // Floor / Ceil
-    float floor(float x) {
-        return float(int32(x));
-    }
-    double floor(double x) {
-        return float(int32(x));
-    }
-    float ceil(float x) {
-        return float(int32(x + 1));
-    }
-    double ceil(double x) {
-        return float(int32(x + 1));
-    }
     // Sqrt
     float sqrt(float x) {
         return std::sqrt(x);
