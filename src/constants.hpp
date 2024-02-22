@@ -15,6 +15,6 @@ namespace Math {
     // Euler
     inline constexpr float EULER = 2.7182818f;
     inline constexpr float EULER_HALFS = EULER / 2;
-    // Golden Ratio
+    // Golden-Ratio
     inline constexpr float GOLDEN_RATIO = 1.618033f;
 }

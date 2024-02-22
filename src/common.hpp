@@ -11,24 +11,24 @@
 #include <map> // OrderedMap
 
 namespace Math {
-    // Data Types
-    // :: address
+    // Types
+    // Types :: address
     using address = std::size_t;
-    // :: int
+    // Types :: int
     using int8 = std::int8_t;
     using int16 = std::int16_t;
     using int32 = std::int32_t;
     using int64 = std::int64_t;
-    // :: uint
+    // Types :: uint
     using uint8 = std::uint8_t;
     using uint16 = std::uint16_t;
     using uint32 = std::uint32_t;
     using uint64 = std::uint64_t;
-    // :: string
+    // Types :: string
     using string = std::string;
-    // :: string_view
+    // Types :: string_view
     using string_view = std::string_view;
-    // Data Structures
+    // Structures
     template<typename T>
     using List = std::vector<T>;
     template<typename T>

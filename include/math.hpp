@@ -1,5 +1,5 @@
 #pragma once
-// #include "constants.hpp"
+// #include "common.hpp"
 #include <memory> // address, int, uint
 #include <string> // string
 #include <string_view> // string_view
@@ -10,25 +10,26 @@
 #include <set> // OrderedSet
 #include <unordered_map> // Map
 #include <map> // OrderedMap
+
 namespace Math {
-    // Data Types
-    // :: address
+    // Types
+    // Types :: address
     using address = std::size_t;
-    // :: int
+    // Types :: int
     using int8 = std::int8_t;
     using int16 = std::int16_t;
     using int32 = std::int32_t;
     using int64 = std::int64_t;
-    // :: uint
+    // Types :: uint
     using uint8 = std::uint8_t;
     using uint16 = std::uint16_t;
     using uint32 = std::uint32_t;
     using uint64 = std::uint64_t;
-    // :: string
+    // Types :: string
     using string = std::string;
-    // :: string_view
+    // Types :: string_view
     using string_view = std::string_view;
-    // Data Structures
+    // Structures
     template<typename T>
     using List = std::vector<T>;
     template<typename T>
@@ -43,6 +44,22 @@ namespace Math {
     using Map = std::unordered_map<Key, Value>;
     template<typename Key, typename Value>
     using OrderedMap = std::map<Key, Value>;
+// #include "constants.hpp"
+    // Pi
+    inline constexpr float PI = 3.1415926f;
+    inline constexpr float PI_HALFS = PI / 2;
+    inline constexpr float TAU = 2 * PI;
+    // Deg
+    inline constexpr float DEG_0 = 0;
+    inline constexpr float DEG_90 = PI / 2;
+    inline constexpr float DEG_180 = PI / 2;
+    inline constexpr float DEG_270 = 5 * PI / 4;
+    inline constexpr float DEG_360 = 2 * PI;
+    // Euler
+    inline constexpr float EULER = 2.7182818f;
+    inline constexpr float EULER_HALFS = EULER / 2;
+    // Golden-Ratio
+    inline constexpr float GOLDEN_RATIO = 1.618033f;
 // #include "arithmetic.hpp"
     // Abs
     int8 abs(int8 x);
