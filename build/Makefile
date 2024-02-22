@@ -10,18 +10,18 @@ endif
 
 ifeq ($(config),debug)
   math_config = debug
-  test_config = debug
+  example_config = debug
 endif
 ifeq ($(config),fast)
   math_config = fast
-  test_config = fast
+  example_config = fast
 endif
 ifeq ($(config),dist)
   math_config = dist
-  test_config = dist
+  example_config = dist
 endif
 
-PROJECTS := math test
+PROJECTS := math example
 
 .PHONY: all clean help $(PROJECTS) 
 
@@ -33,15 +33,15 @@ ifneq (,$(math_config))
 	@${MAKE} --no-print-directory -C . -f math.make config=$(math_config)
 endif
 
-test:
-ifneq (,$(test_config))
-	@echo "==== Building test ($(test_config)) ===="
-	@${MAKE} --no-print-directory -C . -f test.make config=$(test_config)
+example:
+ifneq (,$(example_config))
+	@echo "==== Building example ($(example_config)) ===="
+	@${MAKE} --no-print-directory -C . -f example.make config=$(example_config)
 endif
 
 clean:
 	@${MAKE} --no-print-directory -C . -f math.make clean
-	@${MAKE} --no-print-directory -C . -f test.make clean
+	@${MAKE} --no-print-directory -C . -f example.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -55,6 +55,6 @@ help:
 	@echo "   all (default)"
 	@echo "   clean"
 	@echo "   math"
-	@echo "   test"
+	@echo "   example"
 	@echo ""
 	@echo "For more information, see https://github.com/premake/premake-core/wiki"

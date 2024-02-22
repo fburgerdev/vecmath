@@ -14,9 +14,9 @@ ifeq ($(config),debug)
   RESCOMP = windres
   TARGETDIR = ../lib/debug
   TARGET = $(TARGETDIR)/libmath.a
-  OBJDIR = ../bin/obj/debug/math
-  DEFINES +=
-  INCLUDES += -I../src -I../vendor
+  OBJDIR = ../bin/debug
+  DEFINES += -DCONFIG_DEBUG
+  INCLUDES += -I../src
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
@@ -41,9 +41,9 @@ ifeq ($(config),fast)
   RESCOMP = windres
   TARGETDIR = ../lib/fast
   TARGET = $(TARGETDIR)/libmath.a
-  OBJDIR = ../bin/obj/fast/math
-  DEFINES +=
-  INCLUDES += -I../src -I../vendor
+  OBJDIR = ../bin/fast
+  DEFINES += -DCONFIG_FAST
+  INCLUDES += -I../src
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
@@ -68,9 +68,9 @@ ifeq ($(config),dist)
   RESCOMP = windres
   TARGETDIR = ../lib/dist
   TARGET = $(TARGETDIR)/libmath.a
-  OBJDIR = ../bin/obj/dist/math
-  DEFINES +=
-  INCLUDES += -I../src -I../vendor
+  OBJDIR = ../bin/dist
+  DEFINES += -DCONFIG_DIST
+  INCLUDES += -I../src
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
@@ -78,7 +78,7 @@ ifeq ($(config),dist)
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
   LIBS +=
   LDDEPS +=
-  ALL_LDFLAGS += $(LDFLAGS) -s -static -Ofast
+  ALL_LDFLAGS += $(LDFLAGS) -s -Ofast
   LINKCMD = $(AR) -rcs "$@" $(OBJECTS)
   define PREBUILDCMDS
   endef

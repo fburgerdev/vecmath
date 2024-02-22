@@ -2,6 +2,7 @@
 ROOT = ".."
 -- workspace
 workspace "math"
+   -- configuration
    configurations { "debug", "fast", "dist" }
 -- library
 project "math"
@@ -11,66 +12,88 @@ project "math"
    language "C++"
    cppdialect "C++20"
    -- file
-   files { 
+   files {
       ROOT .. "/src/**.hpp",
       ROOT .. "/src/**.cpp",
-      ROOT .. "/vendor/**.hpp",
-      ROOT .. "/vendor/**.cpp",
    }
    includedirs {
       ROOT .. "/src",
-      ROOT .. "/vendor",
    }
-   -- library
-   links {}
-   -- binary
-   objdir(ROOT .. "/bin/obj")
-   -- debug
+   -- object
+   objdir(ROOT .. "/bin")
+   -- debugger
    debugger "GDB"
    -- config
+   -- config :: debug
    filter "configurations:debug"
+      -- symbols
       symbols "On"
+      -- define
+      defines { "CONFIG_DEBUG" }
+      -- target
       targetdir(ROOT .. "/lib/debug")
+   -- config :: fast
    filter "configurations:fast"
+      -- optimize
       optimize "On"
+      -- define
+      defines { "CONFIG_FAST" }
+      -- option
       linkoptions{ "-Ofast" }
+      -- target
       targetdir(ROOT .. "/lib/fast")
+   -- config :: dist
    filter "configurations:dist"
+      -- optimize
       optimize "On"
-      linkoptions { "-static", "-Ofast" }
+      -- define
+      defines { "CONFIG_DIST" }
+      -- option
+      linkoptions { "-Ofast" }
+      -- target
       targetdir(ROOT .. "/lib/dist")
--- test
-project "test"
+-- example
+project "example"
    -- console
    kind "ConsoleApp"
    -- cpp
    language "C++"
    cppdialect "C++20"
-   -- files
+   -- file
    files {
-      ROOT .. "/test/**.hpp",
-      ROOT .. "/test/**.cpp",
+      ROOT .. "/example/**.hpp",
+      ROOT .. "/example/**.cpp",
    }
    includedirs {
+      ROOT .. "/example",
       ROOT .. "/src",
-      ROOT .. "/vendor",
-      ROOT .. "/test",
    }
-   -- library
-   links {}
-   -- binary
+   -- object
    objdir(ROOT .. "/bin/obj")
    -- debug
    debugger "GDB"
    -- config
    filter "configurations:debug"
+      -- symbols
       symbols "On"
+      defines { "CONFIG_DEBUG" }
+      -- target
       targetdir(ROOT .. "/bin/debug")
    filter "configurations:fast"
+      -- optimize
       optimize "On"
+      -- define
+      defines { "CONFIG_FAST" }
+      -- option
+      linkoptions { "-Ofast" }
+      -- target
       targetdir(ROOT .. "/bin/fast")
-      linkoptions{ "-Ofast" }
    filter "configurations:dist"
+      -- optimize
       optimize "On"
+      -- define
+      defines { "CONFIG_DIST" }
+      -- option
       linkoptions { "-static", "-Ofast" }
+      -- target
       targetdir(ROOT .. "/bin/dist")

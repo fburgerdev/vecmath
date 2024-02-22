@@ -13,10 +13,10 @@ endif
 ifeq ($(config),debug)
   RESCOMP = windres
   TARGETDIR = ../bin/debug
-  TARGET = $(TARGETDIR)/test
-  OBJDIR = ../bin/obj/debug/test
-  DEFINES +=
-  INCLUDES += -I../src -I../vendor -I../test
+  TARGET = $(TARGETDIR)/example
+  OBJDIR = ../bin/obj/debug
+  DEFINES += -DCONFIG_DEBUG
+  INCLUDES += -I../example -I../src
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
@@ -40,10 +40,10 @@ endif
 ifeq ($(config),fast)
   RESCOMP = windres
   TARGETDIR = ../bin/fast
-  TARGET = $(TARGETDIR)/test
-  OBJDIR = ../bin/obj/fast/test
-  DEFINES +=
-  INCLUDES += -I../src -I../vendor -I../test
+  TARGET = $(TARGETDIR)/example
+  OBJDIR = ../bin/obj/fast
+  DEFINES += -DCONFIG_FAST
+  INCLUDES += -I../example -I../src
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
@@ -67,10 +67,10 @@ endif
 ifeq ($(config),dist)
   RESCOMP = windres
   TARGETDIR = ../bin/dist
-  TARGET = $(TARGETDIR)/test
-  OBJDIR = ../bin/obj/dist/test
-  DEFINES +=
-  INCLUDES += -I../src -I../vendor -I../test
+  TARGET = $(TARGETDIR)/example
+  OBJDIR = ../bin/obj/dist
+  DEFINES += -DCONFIG_DIST
+  INCLUDES += -I../example -I../src
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
@@ -104,7 +104,7 @@ ifeq (.exe,$(findstring .exe,$(ComSpec)))
 endif
 
 $(TARGET): $(GCH) ${CUSTOMFILES} $(OBJECTS) $(LDDEPS) $(RESOURCES) | $(TARGETDIR)
-	@echo Linking test
+	@echo Linking example
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
 
@@ -127,7 +127,7 @@ else
 endif
 
 clean:
-	@echo Cleaning test
+	@echo Cleaning example
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(OBJDIR)
@@ -151,7 +151,7 @@ else
 $(OBJECTS): | $(OBJDIR)
 endif
 
-$(OBJDIR)/main.o: ../test/main.cpp
+$(OBJDIR)/main.o: ../example/main.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 
