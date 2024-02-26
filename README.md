@@ -13,8 +13,7 @@ C++ math library for matrix and vector math
 - add "PATH_TO_REPO/lib/CONFIG" to your library directories
 - add library "math"
 
-## Build Yourself
--
+## Or Build Yourself
 
 # System-Support
 - linux: supported, tested, prebuild binaries
