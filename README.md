@@ -6,6 +6,16 @@ C++ math library for matrix and vector math
 - basic arithmetic
 - matrix and vector: structs, construction, arithmetic and other functions
 
+# Use Library
+- add "PATH_TO_REPO/include" to your include directories
+
+## Prebuild Binaries
+- add "PATH_TO_REPO/lib/CONFIG" to your library directories
+- add library "math"
+
+## Build Yourself
+-
+
 # System-Support
 - linux: supported, tested, prebuild binaries
-- all others: supported, not-tested, build yourself
+- others: supported, not-tested, build yourself
