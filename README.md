@@ -4,7 +4,7 @@ C++ math library for matrix and vector math
 ## Features
 - math constants
 - basic arithmetic
-- matrix and vector: structs, construction, arithmetic and other functions
+- matrix and vector structs, construction, arithmetic and other functions
 
 # Use Library
 - add "PATH_TO_REPO/include" to your include directories
