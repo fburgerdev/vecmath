@@ -68,6 +68,8 @@ project "example"
       ROOT .. "/example",
       ROOT .. "/src",
    }
+   -- link
+   links { "math" }
    -- object
    objdir(ROOT .. "/bin/obj")
    -- debug

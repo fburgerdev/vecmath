@@ -8,6 +8,7 @@
 
 using namespace Math;
 int main() {
+    std::cout << exp(2.0) << std::endl;
     Mat4f mat({ 
         1, 2, 0, 0,
         0, 1, 3, 0,

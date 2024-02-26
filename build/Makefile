@@ -33,7 +33,7 @@ ifneq (,$(math_config))
 	@${MAKE} --no-print-directory -C . -f math.make config=$(math_config)
 endif
 
-example:
+example: math
 ifneq (,$(example_config))
 	@echo "==== Building example ($(example_config)) ===="
 	@${MAKE} --no-print-directory -C . -f example.make config=$(example_config)
