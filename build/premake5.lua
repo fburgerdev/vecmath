@@ -2,6 +2,8 @@
 ROOT = ".."
 -- workspace
 workspace "math"
+   -- startproject
+   startproject "example"
    -- configuration
    configurations { "debug", "fast", "dist" }
 -- library
