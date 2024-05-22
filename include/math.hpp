@@ -1,16 +1,17 @@
 #pragma once
-// #include "common.hpp"
-#include <memory> // address, int, uint
-#include <string> // string
-#include <string_view> // string_view
-#include <vector> // List
-#include <stack> // Stack
-#include <queue> // Queue
-#include <unordered_set> // Set 
-#include <set> // OrderedSet
-#include <unordered_map> // Map
-#include <map> // OrderedMap
+// #include <...> (HPPMERGE)
+#include <memory>
+#include <string>
+#include <string_view>
+#include <vector>
+#include <stack>
+#include <queue>
+#include <unordered_set>
+#include <set>
+#include <unordered_map>
+#include <map>
 
+// #include "common.hpp" (HPPMERGE)
 namespace Math {
     // Types
     // Types :: address
@@ -44,7 +45,10 @@ namespace Math {
     using Map = std::unordered_map<Key, Value>;
     template<typename Key, typename Value>
     using OrderedMap = std::map<Key, Value>;
-// #include "constants.hpp"
+}
+
+// #include "constants.hpp" (HPPMERGE)
+namespace Math {
     // Pi
     inline constexpr float PI = 3.1415926f;
     inline constexpr float PI_HALFS = PI / 2;
@@ -60,7 +64,10 @@ namespace Math {
     inline constexpr float EULER_HALFS = EULER / 2;
     // Golden-Ratio
     inline constexpr float GOLDEN_RATIO = 1.618033f;
-// #include "arithmetic.hpp"
+}
+
+// #include "arithmetic.hpp" (HPPMERGE)
+namespace Math {
     // Abs
     int8 abs(int8 x);
     int16 abs(int16 x);
@@ -118,7 +125,10 @@ namespace Math {
             return max(val2 < val1 ? val2 : val1, rest...);
         }
     }
-// #include "matrixstruct.hpp"
+}
+
+// #include "matrixstruct.hpp" (HPPMERGE)
+namespace Math {
     // Matrix N x M
     template<typename T, address N, address M = N>
     class Matrix {
@@ -303,33 +313,64 @@ namespace Math {
         // Member
         T x, y, z, w;
     };
-// #include "matrixalias.hpp"
-    // Generic
+}
+
+// #include "matrixconstruct.hpp" (HPPMERGE)
+namespace Math {
+    // Identity
     template<typename T, address N>
-    using Vector = Matrix<T, N, 1>;
-    template<typename T>
-    using Vec2 = Vector<T, 2>;
-    template<typename T>
-    using Vec3 = Vector<T, 3>;
-    template<typename T>
-    using Vec4 = Vector<T, 4>;
-    // Float
-    using Vec2f = Vec2<float>;
-    using Vec3f = Vec3<float>;
-    using Vec4f = Vec4<float>;
-    // Double
-    using Vec2d = Vec2<double>;
-    using Vec3d = Vec3<double>;
-    using Vec4d = Vec4<double>;
-    // Int
-    using Vec2i = Vec2<int32>;
-    using Vec3i = Vec3<int32>;
-    using Vec4i = Vec4<int32>;
-    // Uint
-    using Vec2u = Vec2<uint32>;
-    using Vec3u = Vec3<uint32>;
-    using Vec4u = Vec4<uint32>;
-// #include "matrixarithmetic.hpp"
+    Matrix<T, N, N> identity() {
+        Matrix<T, N, N> out;
+        for (address n = 0; n < N; ++n) {
+            out.at(n, n) = (T)1;
+        }
+        return out;
+    }
+    // Transpose
+    template<typename T, address N, address M>
+    Matrix<T, M, N> transposed(const Matrix<T, N, M>& mat) {
+        Matrix<T, M, N> out;
+        for (address n = 0; n < N; ++n) {
+            for (address m = 0; m < N; ++m) {
+                out.at(N * m + n) = mat.at(M * n + m);
+            }
+        }
+        return out;
+    }
+    template<typename T, address N>
+    Matrix<T, N>& transpose(Matrix<T, N>& mat) {
+        mat = transposed(mat);
+        return mat;
+    }
+    // Resize
+    template<typename T, address N1, address M1, address N2, address M2>
+    Matrix<T, N1, M1>& insert(Matrix<T, N1, M1>& dest, const Matrix<T, N2, M2>& src, const Matrix<address, 2, 1>& where) {
+        for (address n = 0; n < min(N1 - where.x, N2); ++n) {
+            for (address m = 0; m < min(M1 - where.y, M2); ++m) {
+                dest.at(where.x + n, where.y + m) = src.at(n, m);
+            }
+        }
+        return dest;
+    }
+    template<typename T, address N1, address M1, address N2, address M2>
+    Matrix<T, N1, M1>& insert(Matrix<T, N1, M1>& dest, const Matrix<T, N2, M2>& src) {
+        return insert(dest, src, Matrix<address, 2, 1>(0, 0));
+    }
+    // Resize
+    template<typename T, address N1, address M1, address N2, address M2>
+    Matrix<T, N1, M1> resize(const Matrix<T, N2, M2>& mat, const Matrix<address, 2, 1>& where) {
+        Matrix<T, N1, M1> out;
+        insert(out, mat, where);
+        return out;
+    }
+    template<typename T, address N1, address M1, address N2, address M2>
+    Matrix<T, N1, M1> resize(const Matrix<T, N2, M2>& mat) {
+        return resize<T, N1, M1>(mat, Matrix<address, 2, 1>());
+    }
+}
+
+// #include "matrixarithmetic.hpp" (HPPMERGE)
+namespace Math {
     // -
     template<typename T, address N, address M>
     Matrix<T, N, M> operator-(const Matrix<T, N, M>& mat) {
@@ -418,58 +459,10 @@ namespace Math {
         mat1 = mat1 * mat2;
         return mat1;
     }
-// #include "matrixconstruct.hpp"
-    // Identity
-    template<typename T, address N>
-    Matrix<T, N, N> identity() {
-        Matrix<T, N, N> out;
-        for (address n = 0; n < N; ++n) {
-            out.at(n, n) = (T)1;
-        }
-        return out;
-    }
-    // Transpose
-    template<typename T, address N, address M>
-    Matrix<T, M, N> transposed(const Matrix<T, N, M>& mat) {
-        Matrix<T, M, N> out;
-        for (address n = 0; n < N; ++n) {
-            for (address m = 0; m < N; ++m) {
-                out.at(N * m + n) = mat.at(M * n + m);
-            }
-        }
-        return out;
-    }
-    template<typename T, address N>
-    Matrix<T, N>& transpose(Matrix<T, N>& mat) {
-        mat = transposed(mat);
-        return mat;
-    }
-    // Resize
-    template<typename T, address N1, address M1, address N2, address M2>
-    Matrix<T, N1, M1>& insert(Matrix<T, N1, M1>& dest, const Matrix<T, N2, M2>& src, const Matrix<address, 2, 1>& where) {
-        for (address n = 0; n < min(N1 - where.x, N2); ++n) {
-            for (address m = 0; m < min(M1 - where.y, M2); ++m) {
-                dest.at(where.x + n, where.y + m) = src.at(n, m);
-            }
-        }
-        return dest;
-    }
-    template<typename T, address N1, address M1, address N2, address M2>
-    Matrix<T, N1, M1>& insert(Matrix<T, N1, M1>& dest, const Matrix<T, N2, M2>& src) {
-        return insert(dest, src, Matrix<address, 2, 1>(0, 0));
-    }
-    // Resize
-    template<typename T, address N1, address M1, address N2, address M2>
-    Matrix<T, N1, M1> resize(const Matrix<T, N2, M2>& mat, const Matrix<address, 2, 1>& where) {
-        Matrix<T, N1, M1> out;
-        insert(out, mat, where);
-        return out;
-    }
-    template<typename T, address N1, address M1, address N2, address M2>
-    Matrix<T, N1, M1> resize(const Matrix<T, N2, M2>& mat) {
-        return resize<T, N1, M1>(mat, Matrix<address, 2, 1>());
-    }
-// #include "matrixfunc.hpp"
+}
+
+// #include "matrixfunc.hpp" (HPPMERGE)
+namespace Math {
     // Length
     template<typename T, address N, address M>
     T length(const Matrix<T, N, M>& mat) {
@@ -494,7 +487,73 @@ namespace Math {
     Matrix<T, N, M> normalized(const Matrix<T, N, M>& mat) {
         return normalize(Matrix<T, N, M>(mat));
     }
-// #include "vectoralias.hpp"
+}
+
+// #include "matrixalias.hpp" (HPPMERGE)
+namespace Math {
+    // Generic
+    template<typename T>
+    using Mat2 = Matrix<T, 2>;
+    template<typename T>
+    using Mat3 = Matrix<T, 3>;
+    template<typename T>
+    using Mat4 = Matrix<T, 4>;
+    template<typename T>
+    using Mat2x3 = Matrix<T, 2, 3>;
+    template<typename T>
+    using Mat2x4 = Matrix<T, 2, 4>;
+    template<typename T>
+    using Mat3x2 = Matrix<T, 3, 2>;
+    template<typename T>
+    using Mat3x4 = Matrix<T, 3, 4>;
+    template<typename T>
+    using Mat4x2 = Matrix<T, 4, 2>;
+    template<typename T>
+    using Mat4x3 = Matrix<T, 4, 3>;
+    // Float
+    using Mat2f = Mat2<float>;
+    using Mat3f = Mat3<float>;
+    using Mat4f = Mat4<float>;
+    using Mat2x3f = Mat2x3<float>;
+    using Mat2x4f = Mat2x4<float>;
+    using Mat3x2f = Mat3x2<float>;
+    using Mat3x4f = Mat3x4<float>;
+    using Mat4x2f = Mat4x2<float>;
+    using Mat4x3f = Mat4x3<float>;
+    // Double
+    using Mat2d = Mat2<double>;
+    using Mat3d = Mat3<double>;
+    using Mat4d = Mat4<double>;
+    using Mat2x3d = Mat2x3<double>;
+    using Mat2x4d = Mat2x4<double>;
+    using Mat3x2d = Mat3x2<double>;
+    using Mat3x4d = Mat3x4<double>;
+    using Mat4x2d = Mat4x2<double>;
+    using Mat4x3d = Mat4x3<double>;
+    // Int
+    using Mat2i = Mat2<int>;
+    using Mat3i = Mat3<int>;
+    using Mat4i = Mat4<int>;
+    using Mat2x3i = Mat2x3<int>;
+    using Mat2x4i = Mat2x4<int>;
+    using Mat3x2i = Mat3x2<int>;
+    using Mat3x4i = Mat3x4<int>;
+    using Mat4x2i = Mat4x2<int>;
+    using Mat4x3i = Mat4x3<int>;
+    // Uint
+    using Mat2u = Mat2<uint>;
+    using Mat3u = Mat3<uint>;
+    using Mat4u = Mat4<uint>;
+    using Mat2x3u = Mat2x3<uint>;
+    using Mat2x4u = Mat2x4<uint>;
+    using Mat3x2u = Mat3x2<uint>;
+    using Mat3x4u = Mat3x4<uint>;
+    using Mat4x2u = Mat4x2<uint>;
+    using Mat4x3u = Mat4x3<uint>;
+}
+
+// #include "vectoralias.hpp" (HPPMERGE)
+namespace Math {
     // Generic
     template<typename T, address N>
     using Vector = Matrix<T, N, 1>;
@@ -520,7 +579,10 @@ namespace Math {
     using Vec2u = Vec2<uint32>;
     using Vec3u = Vec3<uint32>;
     using Vec4u = Vec4<uint32>;
-// #include "vectorfunc.hpp"
+}
+
+// #include "vectorfunc.hpp" (HPPMERGE)
+namespace Math {
     // Dot
     template<typename T, address N>
     T dot(const Vector<T, N>& v) {
