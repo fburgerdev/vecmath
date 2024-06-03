@@ -14,7 +14,7 @@ ifeq ($(config),debug)
   RESCOMP = windres
   TARGETDIR = ../lib/debug
   TARGET = $(TARGETDIR)/libmath.a
-  OBJDIR = ../bin/debug
+  OBJDIR = ../bin/obj/linux_debug
   DEFINES += -DCONFIG_DEBUG
   INCLUDES += -I../src
   FORCE_INCLUDE +=
@@ -37,12 +37,12 @@ all: prebuild prelink $(TARGET)
 
 endif
 
-ifeq ($(config),fast)
+ifeq ($(config),release)
   RESCOMP = windres
-  TARGETDIR = ../lib/fast
+  TARGETDIR = ../lib/release
   TARGET = $(TARGETDIR)/libmath.a
-  OBJDIR = ../bin/fast
-  DEFINES += -DCONFIG_FAST
+  OBJDIR = ../bin/obj/linux_release
+  DEFINES += -DCONFIG_RELEASE
   INCLUDES += -I../src
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
@@ -68,7 +68,7 @@ ifeq ($(config),dist)
   RESCOMP = windres
   TARGETDIR = ../lib/dist
   TARGET = $(TARGETDIR)/libmath.a
-  OBJDIR = ../bin/dist
+  OBJDIR = ../bin/obj/linux_dist
   DEFINES += -DCONFIG_DIST
   INCLUDES += -I../src
   FORCE_INCLUDE +=
@@ -94,6 +94,7 @@ endif
 OBJECTS := \
 	$(OBJDIR)/arithmetic.o \
 	$(OBJDIR)/precompile.o \
+	$(OBJDIR)/transform.o \
 
 RESOURCES := \
 
@@ -156,6 +157,9 @@ $(OBJDIR)/arithmetic.o: ../src/arithmetic.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/precompile.o: ../src/precompile.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/transform.o: ../src/transform.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

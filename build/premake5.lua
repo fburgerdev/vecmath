@@ -1,29 +1,29 @@
 -- premake5.lua
 ROOT = ".."
+math_NAME = "math" --[[ MODIFY ]]
+DEFAULT_TEST = "test" --[[ MODIFY ]]
 -- workspace
-workspace "math"
+workspace(math_NAME)
+   -- build options
+   configurations { "debug", "release", "dist" }
    -- startproject
-   startproject "example"
-   -- configuration
-   configurations { "debug", "fast", "dist" }
--- library
-project "math"
-   -- staticlib
-   kind "StaticLib"
+   startproject(DEFAULT_TEST)
+   -- console
+   kind "ConsoleApp"
    -- cpp
    language "C++"
    cppdialect "C++20"
-   -- file
-   files {
-      ROOT .. "/src/**.hpp",
-      ROOT .. "/src/**.cpp",
-   }
+   -- includedirs
    includedirs {
       ROOT .. "/src",
+      ROOT .. "/vendor/*/include",
    }
-   -- object
-   objdir(ROOT .. "/bin")
-   -- debugger
+   -- bin
+   -- bin :: targetdir
+   targetdir(ROOT .. "/bin/%{cfg.buildcfg}_%{prj.name}")
+   -- bin :: objdir
+   objdir(ROOT .. "/bin/obj/%{cfg.system}_%{cfg.buildcfg}/%{prj.name}")
+   -- debug
    debugger "GDB"
    -- config
    -- config :: debug
@@ -32,72 +32,53 @@ project "math"
       symbols "On"
       -- define
       defines { "CONFIG_DEBUG" }
-      -- target
-      targetdir(ROOT .. "/lib/debug")
    -- config :: fast
-   filter "configurations:fast"
+   filter "configurations:release"
       -- optimize
       optimize "On"
       -- define
-      defines { "CONFIG_FAST" }
-      -- option
+      defines { "CONFIG_RELEASE" }
+      -- linkoptions
       linkoptions{ "-Ofast" }
-      -- target
-      targetdir(ROOT .. "/lib/fast")
    -- config :: dist
    filter "configurations:dist"
       -- optimize
       optimize "On"
       -- define
       defines { "CONFIG_DIST" }
-      -- option
+      -- linkoptions
       linkoptions { "-Ofast" }
-      -- target
-      targetdir(ROOT .. "/lib/dist")
--- example
-project "example"
-   -- console
-   kind "ConsoleApp"
-   -- cpp
-   language "C++"
-   cppdialect "C++20"
-   -- file
-   files {
-      ROOT .. "/example/**.hpp",
-      ROOT .. "/example/**.cpp",
-   }
+-- project
+-- project :: lib
+project(math_NAME)
+   -- staticlib
+   kind "StaticLib"
+   -- includedirs
    includedirs {
-      ROOT .. "/example",
-      ROOT .. "/src",
+      ROOT .. "/vendor/*/include",
    }
-   -- link
-   links { "math" }
-   -- object
-   objdir(ROOT .. "/bin/obj")
-   -- debug
-   debugger "GDB"
-   -- config
-   filter "configurations:debug"
-      -- symbols
-      symbols "On"
-      defines { "CONFIG_DEBUG" }
-      -- target
-      targetdir(ROOT .. "/bin/debug")
-   filter "configurations:fast"
-      -- optimize
-      optimize "On"
-      -- define
-      defines { "CONFIG_FAST" }
-      -- option
-      linkoptions { "-Ofast" }
-      -- target
-      targetdir(ROOT .. "/bin/fast")
-   filter "configurations:dist"
-      -- optimize
-      optimize "On"
-      -- define
-      defines { "CONFIG_DIST" }
-      -- option
-      linkoptions { "-static", "-Ofast" }
-      -- target
-      targetdir(ROOT .. "/bin/dist")
+   -- files
+   files {
+      ROOT .. "/src/**",
+   }
+   -- bin
+   -- bin :: targetdir
+   targetdir(ROOT .. "/lib/%{cfg.buildcfg}")
+   -- bin :: obj
+   objdir(ROOT .. "/bin/obj/%{cfg.system}_%{cfg.buildcfg}")
+-- project :: tests
+project "test"
+   -- files
+   files {
+      ROOT .. "/tests/%{prj.name}.cpp",
+      --[[ INSERT ADDITIONAL FILES HERE ]]
+   }
+   -- libdirs
+   libdirs {
+      ROOT .. "lib/%{cfg.system}",
+      ROOT .. "/vendor/*/lib/%{cfg.buildcfg}",
+      --[[ INSERT ADDITIONAL LIB DIRECTORIES HERE ]]
+   }
+   -- links
+   links { math_NAME, --[[ INSERT ADDITIONAL LIBS HERE ]] }
+--[[ INSERT ADDITIONAL TESTS HERE ]]
