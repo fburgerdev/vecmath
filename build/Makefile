@@ -9,39 +9,29 @@ ifndef verbose
 endif
 
 ifeq ($(config),debug)
-  math_config = debug
-  test_config = debug
+  vecmath_config = debug
 endif
 ifeq ($(config),release)
-  math_config = release
-  test_config = release
+  vecmath_config = release
 endif
 ifeq ($(config),dist)
-  math_config = dist
-  test_config = dist
+  vecmath_config = dist
 endif
 
-PROJECTS := math test
+PROJECTS := vecmath
 
 .PHONY: all clean help $(PROJECTS) 
 
 all: $(PROJECTS)
 
-math:
-ifneq (,$(math_config))
-	@echo "==== Building math ($(math_config)) ===="
-	@${MAKE} --no-print-directory -C . -f math.make config=$(math_config)
-endif
-
-test: math
-ifneq (,$(test_config))
-	@echo "==== Building test ($(test_config)) ===="
-	@${MAKE} --no-print-directory -C . -f test.make config=$(test_config)
+vecmath:
+ifneq (,$(vecmath_config))
+	@echo "==== Building vecmath ($(vecmath_config)) ===="
+	@${MAKE} --no-print-directory -C . -f vecmath.make config=$(vecmath_config)
 endif
 
 clean:
-	@${MAKE} --no-print-directory -C . -f math.make clean
-	@${MAKE} --no-print-directory -C . -f test.make clean
+	@${MAKE} --no-print-directory -C . -f vecmath.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -54,7 +44,6 @@ help:
 	@echo "TARGETS:"
 	@echo "   all (default)"
 	@echo "   clean"
-	@echo "   math"
-	@echo "   test"
+	@echo "   vecmath"
 	@echo ""
 	@echo "For more information, see https://github.com/premake/premake-core/wiki"

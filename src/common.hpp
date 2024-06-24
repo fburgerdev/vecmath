@@ -1,3 +1,8 @@
+/*
+    This header file was automatically created by 'cpp-library',
+    it is not meant to be modified.
+    For more infos, see https://github.com/fburgerdev/cpp-library
+*/
 #pragma once
 #include <ranges> // stdr
 #include <memory> // address, int, uint

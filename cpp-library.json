@@ -1,0 +1,11 @@
+{
+    "project": "vecmath",
+    "author": "Florian Burger (git@fburgerdev)",
+    "namespace": "Math",
+    
+    "tests": {
+        "test": {
+            "files": [ "test.cpp" ]
+        }
+    }
+}

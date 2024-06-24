@@ -1,7 +1,7 @@
-#include "matrixstruct.hpp"
+#include "matrix.hpp"
 
 namespace Math {
-    // Float
+    // float
     template class Matrix<float, 1, 2>;
     template class Matrix<float, 1, 3>;
     template class Matrix<float, 1, 4>;
@@ -16,7 +16,7 @@ namespace Math {
     template class Matrix<float, 4, 2>;
     template class Matrix<float, 4, 3>;
     template class Matrix<float, 4, 4>;
-    // Double
+    // double
     template class Matrix<double, 1, 2>;
     template class Matrix<double, 1, 3>;
     template class Matrix<double, 1, 4>;
@@ -32,7 +32,7 @@ namespace Math {
     template class Matrix<double, 4, 2>;
     template class Matrix<double, 4, 3>;
     template class Matrix<double, 4, 4>;
-    // Int
+    // int
     template class Matrix<int, 1, 2>;
     template class Matrix<int, 1, 3>;
     template class Matrix<int, 1, 4>;
@@ -48,7 +48,7 @@ namespace Math {
     template class Matrix<int, 4, 2>;
     template class Matrix<int, 4, 3>;
     template class Matrix<int, 4, 4>;
-    // Uint
+    // uint
     template class Matrix<uint, 1, 2>;
     template class Matrix<uint, 1, 3>;
     template class Matrix<uint, 1, 4>;
