@@ -1,11 +1,18 @@
 {
     "project": "vecmath",
-    "author": "Florian Burger (git@fburgerdev)",
+    "author": "florian burger (git@fburgerdev)",
     "namespace": "Math",
     
-    "tests": {
-        "test": {
+    "libraries": [
+        {
+            "name": "beaver",
+            "url": "https://github.com/fburgerdev/beaver"
+        }
+    ],
+    "tests": [
+        {
+            "name": "test",
             "files": [ "test.cpp" ]
         }
-    }
+    ]
 }

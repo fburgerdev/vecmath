@@ -1,218 +1,227 @@
 #pragma once
-#include "common.hpp"
+#include "arithmetic.hpp"
 
 namespace Math {
-    // Matrix
-    template<typename T, address N, address M = N>
-    class Matrix {
+    // Mat
+    template<typename T, uint N, uint M = N>
+    class Mat {
     public:
         // constructor
-        Matrix() {
-            for (address i = 0; i < N * M; ++i) {
+        Mat() {
+            for (uint i = 0; i < N * M; ++i) {
                 m_Data[i] = (T)0;
             } 
         }
-        Matrix(T (&values)[N * M]) {
-            for (address i = 0; i < N * M; ++i) {
+        Mat(T (&values)[N * M]) {
+            for (uint i = 0; i < N * M; ++i) {
                 m_Data[i] = values[i];
             }
         }
-        Matrix(T (&&values)[N * M]) {
-            for (address i = 0; i < N * M; ++i) {
+        Mat(T (&&values)[N * M]) {
+            for (uint i = 0; i < N * M; ++i) {
                 m_Data[i] = values[i];
             }
         }
-        Matrix(T (&values)[N][M]) {
-            for (address n = 0; n < N; ++n) {
-                for (address m = 0; m < M; ++m) {
+        Mat(T (&values)[N][M]) {
+            for (uint n = 0; n < N; ++n) {
+                for (uint m = 0; m < M; ++m) {
                     m_Data[M * n + m] = values[n][m];
                 }
             }
         }
-        Matrix(T (&&values)[N][M]) {
-            for (address n = 0; n < N; ++n) {
-                for (address m = 0; m < M; ++m) {
+        Mat(T (&&values)[N][M]) {
+            for (uint n = 0; n < N; ++n) {
+                for (uint m = 0; m < M; ++m) {
                     m_Data[M * n + m] = values[n][m];
                 }
             }
         }
         template<typename U>
-        Matrix(const Matrix<U, N, M>& mat) {
-            for (address i = 0; i < N * M; ++i) {
+        Mat(const Mat<U, N, M>& mat) {
+            for (uint i = 0; i < N * M; ++i) {
                 m_Data[i] = (T)mat.at(i);
             }
         }
         // access
         // :: at
-        T& at(address index) {
+        T& at(uint index) {
+            ASSERT(inRange(index, 0, N * M))
             return m_Data[index];
         }
-        const T& at(address index) const {
+        const T& at(uint index) const {
+            ASSERT(inRange(index, 0, N * M))
             return m_Data[index];
         }
-        T& at(address n, address m) {
+        T& at(uint n, uint m) {
+            ASSERT(inRange(n, 0, N) && inRange(m, 0, M))
             return m_Data[M * n + m];
         }
-        const T& at(address n, address m) const {
+        const T& at(uint n, uint m) const {
+            ASSERT(inRange(n, 0, N) && inRange(m, 0, M))
             return m_Data[M * n + m];
         }
         // :: operator[]
-        T& operator[](address index) {
+        T& operator[](uint index) {
             return at(index);
         }
-        const T& operator[](address index) const {
+        const T& operator[](uint index) const {
             return at(index);
-        }
-        // :: data
-        T* data() {
-            return m_Data;
-        }
-        const T* data() const {
-            return m_Data;
         }
         // insert
-        template<typename U, address N2, address M2>
-        auto insert(const Matrix<U, N2, M2>& value, const Matrix<address, 2, 1>& where);
+        template<typename U, uint N2, uint M2>
+        auto insert(const Mat<U, N2, M2>& value, const Mat<uint, 2, 1>& where);
     private:
         // data
         T m_Data[N * M];
     };
-    // Matrix 2 x 1
+    // Mat 2 x 1
     template<typename T>
-    class Matrix<T, 2, 1> {
+    class Mat<T, 2, 1> {
     public:
         // constructor
-        Matrix()
-            : Matrix((T)0) {}
-        Matrix(T value)
-            : Matrix(value, value) {}
-        Matrix(T x, T y)
+        Mat()
+            : Mat((T)0) {}
+        Mat(T value)
+            : Mat(value, value) {}
+        Mat(T x, T y)
             : x(x), y(y) {}
         template<typename U>
-        Matrix(const Matrix<U, 2, 1>& vec)
-            : Matrix((T)vec.at(0), (T)vec.at(1)) {}
+        Mat(const Mat<U, 2, 1>& vec)
+            : Mat(static_cast<T>(vec.x), static_cast<T>(vec.y)) {}
         // access
         // :: at
-        T& at(address index) {
+        T& at(uint index) {
+            ASSERT(inRange(index, 0, 1))
             return index == 0 ? x : y;
         }
-        const T& at(address index) const {
+        const T& at(uint index) const {
+            ASSERT(inRange(index, 0, 1))
             return index == 0 ? x : y;
         }
-        T& at(address n, address m) {
+        T& at(uint n, uint m) {
+            ASSERT(inRange(n, 0, 1) && m == 0)
             return at(n);
         }
-        const T& at(address n, address m) const {
+        const T& at(uint n, uint m) const {
+            ASSERT(inRange(n, 0, 1) && m == 0)
             return at(n);
         }
         // :: operator[]
-        T& operator[](address index) {
+        T& operator[](uint index) {
             return at(index);
         }
-        const T& operator[](address index) const {
+        const T& operator[](uint index) const {
             return at(index);
         }
         // insert
-        template<typename U, address N2, address M2>
-        auto insert(const Matrix<U, N2, M2>& value, const Matrix<address, 2, 1>& where);
+        template<typename U, uint N2, uint M2>
+        auto insert(const Mat<U, N2, M2>& value, const Mat<uint, 2, 1>& where);
         // values
         T x, y;
     };
-    // Matrix 3 x 1
+    // Mat 3 x 1
     template<typename T>
-    class Matrix<T, 3, 1> {
+    class Mat<T, 3, 1> {
     public:
         // constructor
-        Matrix()
-            : Matrix((T)0) {}
-        Matrix(T value)
-            : Matrix(value, value, value) {}
-        Matrix(T x, T y, T z)
+        Mat()
+            : Mat((T)0) {}
+        Mat(T value)
+            : Mat(value, value, value) {}
+        Mat(T x, T y, T z)
             : x(x), y(y), z(z) {}
-        Matrix(const Matrix<T, 2, 1>& xy, T z)
-            : Matrix(xy.x, xy.y, z) {}
-        Matrix(T x, const Matrix<T, 2, 1>& yz)
-            : Matrix(x, yz.x, yz.y) {}
+        Mat(const Mat<T, 2, 1>& xy, T z)
+            : Mat(xy.x, xy.y, z) {}
+        Mat(T x, const Mat<T, 2, 1>& yz)
+            : Mat(x, yz.x, yz.y) {}
         template<typename U>
-        Matrix(const Matrix<U, 3, 1>& vec)
-            : Matrix((T)vec.at(0), (T)vec.at(1), (T)vec.at(2)) {}
+        Mat(const Mat<U, 3, 1>& vec)
+            : Mat(static_cast<T>(vec.x), static_cast<T>(vec.y), static_cast<T>(vec.z)) {}
         // access
         // :: at
-        T& at(address index) {
+        T& at(uint index) {
+            ASSERT(inRange(index, 0, 2))
             return index == 0 ? x : (index == 1 ? y : z);
         }
-        const T& at(address index) const {
+        const T& at(uint index) const {
+            ASSERT(inRange(index, 0, 2))
             return index == 0 ? x : (index == 1 ? y : z);
         }
-        T& at(address n, address m) {
+        T& at(uint n, uint m) {
+            ASSERT(inRange(n, 0, 2) && m == 0)
             return at(n);
         }
-        const T& at(address n, address m) const {
+        const T& at(uint n, uint m) const {
+            ASSERT(inRange(n, 0, 2) && m == 0)
             return at(n);
         }
         // :: operator[]
-        T& operator[](address index) {
+        T& operator[](uint index) {
             return at(index);
         }
-        const T& operator[](address index) const {
+        const T& operator[](uint index) const {
             return at(index);
         }
         // insert
-        template<typename U, address N2, address M2>
-        auto insert(const Matrix<U, N2, M2>& value, const Matrix<address, 2, 1>& where);
+        template<typename U, uint N2, uint M2>
+        auto insert(const Mat<U, N2, M2>& value, const Mat<uint, 2, 1>& where);
         // values
         T x, y, z;
     };
-    // Matrix 4 x 1
+    // Mat 4 x 1
     template<typename T>
-    class Matrix<T, 4, 1> {
+    class Mat<T, 4, 1> {
     public:
         // constructor
-        Matrix()
-            : Matrix((T)0) {}
-        Matrix(T value)
-            : Matrix(value, value, value, value) {}
-        Matrix(T x, T y, T z, T w)
+        Mat()
+            : Mat((T)0) {}
+        Mat(T value)
+            : Mat(value, value, value, value) {}
+        Mat(T x, T y, T z, T w)
             : x(x), y(y), z(z), w(w) {}
-        Matrix(const Matrix<T, 2, 1>& xy, T z, T w)
-            : Matrix(xy.x, xy.y, z, w) {}
-        Matrix(T x, const Matrix<T, 2, 1>& yz, T w)
-            : Matrix(x, yz.x, yz.y, w) {}
-        Matrix(T x, T y, const Matrix<T, 2, 1>& zw)
-            : Matrix(x, y, zw.x, zw.y) {}
-        Matrix(const Matrix<T, 2, 1>& xy, const Matrix<T, 2, 1>& yz)
-            : Matrix(xy.x, xy.y, yz.x, yz.y) {}
-        Matrix(const Matrix<T, 3, 1>& xyz, T w)
-            : Matrix(xyz.x, xyz.y, xyz.z, w) {}
-        Matrix(T x, const Matrix<T, 3, 1>& yzw)
-            : Matrix(x, yzw.x, yzw.y, yzw.z) {}
+        Mat(const Mat<T, 2, 1>& xy, T z, T w)
+            : Mat(xy.x, xy.y, z, w) {}
+        Mat(T x, const Mat<T, 2, 1>& yz, T w)
+            : Mat(x, yz.x, yz.y, w) {}
+        Mat(T x, T y, const Mat<T, 2, 1>& zw)
+            : Mat(x, y, zw.x, zw.y) {}
+        Mat(const Mat<T, 2, 1>& xy, const Mat<T, 2, 1>& yz)
+            : Mat(xy.x, xy.y, yz.x, yz.y) {}
+        Mat(const Mat<T, 3, 1>& xyz, T w)
+            : Mat(xyz.x, xyz.y, xyz.z, w) {}
+        Mat(T x, const Mat<T, 3, 1>& yzw)
+            : Mat(x, yzw.x, yzw.y, yzw.z) {}
         template<typename U>
-        Matrix(const Matrix<U, 4, 1>& vec)
-            : Matrix((T)vec.at(0), (T)vec.at(1), (T)vec.at(2), (T)vec.at(3)) {}
+        Mat(const Mat<U, 4, 1>& vec)
+            : Mat(static_cast<T>(vec.x), static_cast<T>(vec.y), static_cast<T>(vec.z), static_cast<T>(vec.w)) {}
         // access
         // :: at
-        T& at(address index) {
+        T& at(uint index) {
+            ASSERT(inRange(index, 0, 3))
             return index == 0 ? x : (index == 1 ? y : (index == 2 ? z : w));
         }
-        const T& at(address index) const {
+        const T& at(uint index) const {
+            ASSERT(inRange(index, 0, 3))
             return index == 0 ? x : (index == 1 ? y : (index == 2 ? z : w));
         }
-        T& at(address n, address m) {
+        T& at(uint n, uint m) {
+            ASSERT(inRange(n, 0, 3) && m == 0)
             return at(n);
         }
-        const T& at(address n, address m) const {
+        const T& at(uint n, uint m) const {
+            ASSERT(inRange(n, 0, 3) && m == 0)
             return at(n);
         }
         // :: operator[]
-        T& operator[](address index) {
+        T& operator[](uint index) {
             return at(index);
         }
-        const T& operator[](address index) const {
+        const T& operator[](uint index) const {
             return at(index);
         }
         // insert
-        template<typename U, address N2, address M2>
-        auto insert(const Matrix<U, N2, M2>& value, const Matrix<address, 2, 1>& where);
+        template<typename U, uint N2, uint M2>
+        auto insert(const Mat<U, N2, M2>& value, const Mat<uint, 2, 1>& where);
         // values
         T x, y, z, w;
     };

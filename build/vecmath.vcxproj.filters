@@ -11,6 +11,7 @@
     <ClInclude Include="..\src\common.hpp" />
     <ClInclude Include="..\src\constants.hpp" />
     <ClInclude Include="..\src\curves.hpp" />
+    <ClInclude Include="..\src\logging.hpp" />
     <ClInclude Include="..\src\matrix.hpp" />
     <ClInclude Include="..\src\matrix\alias.hpp">
       <Filter>matrix</Filter>
@@ -33,7 +34,6 @@
     <ClInclude Include="..\src\vecmath.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\arithmetic.cpp" />
     <ClCompile Include="..\src\precompile.cpp" />
   </ItemGroup>
 </Project>

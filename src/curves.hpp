@@ -3,19 +3,22 @@
 #include "arithmetic.hpp"
 
 namespace Math {
-    // linear interpolation
-    template<floating_point T, address N>
-    auto lerp(const Vector<T, N>& v1, const Vector<T, N>& v2, T value) {
-        return v1 * value + v2 * (1 - value);
+    // lerp linear interpolation
+    template<floating_point T, uint N>
+    auto lerp(const Vec<T, N>& v1, const Vec<T, N>& v2, T t) {
+        ASSERT(inRange01(t))
+        return v1 * t + v2 * (1 - t);
     }
     // quadratic bezier curve
-    template<floating_point T, address N>
-    auto quadratic(const Vector<T, N>& v1, const Vector<T, N>& v2, const Vector<T, N>& v3, T value) {
-        return v1 * pow2(1 - value) + v1 * (2 * (1 - value)) + v3 * pow2(value);
+    template<floating_point T, uint N>
+    auto quadratic(const Vec<T, N>& v1, const Vec<T, N>& v2, const Vec<T, N>& v3, T t) {
+        ASSERT(inRange01(t))
+        return v1 * pow2(1 - t) + v1 * (2 * (1 - t)) + v3 * pow2(t);
     }
     // cubic bezier curve
-    template<floating_point T, address N>
-    auto cubic(const Vector<T, N>& v1, const Vector<T, N>& v2, const Vector<T, N>& v3, const Vector<T, N>& v4, T value) {
-        return v1 * pow3(1 - value) + v1 * (3 * pow2(1 - value) * value) + v1 * (3 * (1 - value) * pow(value)) + v3 * pow3(value);
+    template<floating_point T, uint N>
+    auto cubic(const Vec<T, N>& v1, const Vec<T, N>& v2, const Vec<T, N>& v3, const Vec<T, N>& v4, T t) {
+        ASSERT(inRange01(t))
+        return v1 * pow3(1 - t) + v1 * (3 * pow2(1 - t) * t) + v1 * (3 * (1 - t) * pow(t)) + v3 * pow3(t);
     }
 }

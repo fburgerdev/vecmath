@@ -44,3 +44,31 @@ project "vecmath"
    -- binaries
    targetdir(ROOT .. "/lib/%{cfg.buildcfg}")
    objdir(ROOT .. "/bin/%{cfg.system}_%{cfg.buildcfg}")
+-- tests :: test
+project "test"
+   -- console
+   kind "ConsoleApp"
+   -- include directories
+   includedirs {
+      ROOT .. "/include",
+      ROOT .. "/src",
+      ROOT .. "/modules/*/include",
+      ROOT .. "/vendor/*/include"
+   }
+   -- library directories
+   libdirs {
+      ROOT .. "/lib/%{cfg.buildcfg}",
+      ROOT .. "/modules/*/lib/%{cfg.buildcfg}",
+      ROOT .. "/vendor/*/lib/%{cfg.buildcfg}"
+   }
+   -- files
+   files {
+      ROOT .. "/tests/test.cpp",  --[[ INSERT ADDITIONAL FILES HERE ]]
+   }
+   -- links
+   links { "vecmath", "beaver",  --[[ INSERT ADDITIONAL LINKS HERE ]] }
+   -- defines
+   defines {  }
+   -- binaries
+   targetdir(ROOT .. "/bin/tests/%{cfg.system}_%{cfg.buildcfg}")
+   objdir(ROOT .. "/bin/tests/%{cfg.system}_%{cfg.buildcfg}/obj")

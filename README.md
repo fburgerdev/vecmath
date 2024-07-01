@@ -3,13 +3,9 @@
 
 describe your project ...
 
+## Dependancies
+- beaver, see https://github.com/fburgerdev/beaver
 
-## Interface
-```cpp
-namespace Math {
-    // INSERT YOUR INTERFACE HERE
-}
-```
 ## Usage
 ### Use Case 1
 ```cpp
@@ -23,10 +19,14 @@ namespace Math {
 
 ## Include this Library
 In your c++ project
-- add _include/vecmath_ to your include directories
+- add _include/vecmath.a_ to your include directories
 - add _lib/[config]_ to your library directories (depending on your configuration)
 - link the library _libvecmath.a_ (for linux) and _vecmath.lib_ (for windows)
 
+In order to resolve the dependancies
+- for beaver
+    - add _modules/beaver/lib/[config]_ to your include directories
+    - link the library _libbeaver.a_ or _beaver.lib_
 
 ## Build (Optional)
 #### Using Linux (Debian)

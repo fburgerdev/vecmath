@@ -1,74 +1,69 @@
 #pragma once
 #include "alias.hpp"
-#include "arithmetic.hpp"
-#include <concepts> // std::floating_point
 
 namespace Math {
-    // floating
-    using std::floating_point;
-
-    // inner product
-    template<typename T, address N, address M>
-    auto inner(const Matrix<T, N, M>& mat1, const Matrix<T, N, M>& mat2) {
+    // inner
+    template<typename T, uint N, uint M>
+    auto inner(const Mat<T, N, M>& mat1, const Mat<T, N, M>& mat2) {
         T out = 0;
-        for (address i = 0; i < N * M; ++i) {
+        for (uint i = 0; i < N * M; ++i) {
             out += mat1.at(i) * mat2.at(i);
         }
         return out;
     }
-    template<typename T, address N, address M>
-    auto inner(const Matrix<T, N, M>& mat) {
+    template<typename T, uint N, uint M>
+    auto inner(const Mat<T, N, M>& mat) {
         return inner(mat, mat);
     }
-    // transposed matrix
-    template<typename T, address N, address M>
-    auto transpose(const Matrix<T, N, M>& mat) {
-        Matrix<T, M, N> out;
-        for (address n = 0; n < N; ++n) {
-            for (address m = 0; m < N; ++m) {
-                out.at(N * m + n) = mat.at(M * n + m);
+    // transpose
+    template<typename T, uint N, uint M>
+    auto transpose(const Mat<T, N, M>& mat) {
+        Mat<T, M, N> out;
+        for (uint n = 0; n < N; ++n) {
+            for (uint m = 0; m < N; ++m) {
+                out.at(m, n) = mat.at(n, m);
             }
         }
         return out;
     }
     // norm
-    template<floating_point T, address N, address M>
-    auto norm(const Matrix<T, N, M>& mat) {
+    template<floating_point T, uint N, uint M>
+    auto norm(const Mat<T, N, M>& mat) {
         return sqrt(inner(mat));
     }
     // normalize
-    template<floating_point T, address N, address M>
-    auto normalize(const Matrix<T, N, M>& mat) {
+    template<floating_point T, uint N, uint M>
+    auto normalize(const Mat<T, N, M>& mat) {
         return mat / norm(mat);
     }
 
-    // vector specific operations
-    // :: dot product
-    template<typename T, address N>
-    auto dot(const Vector<T, N>& vec1, const Vector<T, N>& vec2) {
+    // vector operations
+    // :: dot
+    template<typename T, uint N>
+    auto dot(const Vec<T, N>& v1, const Vec<T, N>& v2) {
         T out = 0;
-        for (address n = 0; n < N; ++n) {
-            out += vec1.at(n) * vec2.at(n);
+        for (uint n = 0; n < N; ++n) {
+            out += v1.at(n) * v2.at(n);
         }
         return out;
     }
-    template<typename T, address N>
-    auto dot(const Vector<T, N>& v) {
+    template<typename T, uint N>
+    auto dot(const Vec<T, N>& v) {
         return dot(v, v);
     }
-    // :: cross product
+    // :: cross
     template<typename T>
     auto cross(const Vec3<T>& v1, const Vec3<T>& v2) {
         return Vec3<T>(v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x);
     }
     // :: length
-    template<floating_point T, address N>
-    auto length(const Vector<T, N>& v) {
+    template<floating_point T, uint N>
+    auto length(const Vec<T, N>& v) {
         return sqrt(dot(v));
     }
     // :: distance
-    template<floating_point T, address N>
-    auto distance(const Vector<T, N>& v1, const Vector<T, N>& v2) {
+    template<floating_point T, uint N>
+    auto distance(const Vec<T, N>& v1, const Vec<T, N>& v2) {
         return length(v2 - v1);
     }
 }
