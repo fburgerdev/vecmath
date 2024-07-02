@@ -1,6 +1,7 @@
 ../bin/tests/linux_dist/obj/test.o: ../tests/test.cpp \
- /usr/include/stdc-predef.h ../src/common.hpp /usr/include/c++/11/ranges \
- /usr/include/c++/11/concepts /usr/include/c++/11/type_traits \
+ /usr/include/stdc-predef.h ../src/vecmath.hpp ../src/common.hpp \
+ /usr/include/c++/11/ranges /usr/include/c++/11/concepts \
+ /usr/include/c++/11/type_traits \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -223,8 +224,8 @@
  /usr/include/c++/11/bits/unordered_map.h /usr/include/c++/11/functional \
  /usr/include/c++/11/bits/std_function.h /usr/include/c++/11/iostream \
  /usr/include/c++/11/istream /usr/include/c++/11/bits/istream.tcc \
- ../src/vecmath.hpp ../src/constants.hpp ../src/arithmetic.hpp \
- ../src/logging.hpp /usr/include/c++/11/cmath /usr/include/math.h \
+ ../src/constants.hpp ../src/arithmetic.hpp ../src/logging.hpp \
+ /usr/include/c++/11/cmath /usr/include/math.h \
  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
@@ -252,6 +253,7 @@
  ../src/matrix/alias.hpp ../src/matrix/ostream.hpp ../src/curves.hpp \
  ../src/3d.hpp
 /usr/include/stdc-predef.h:
+../src/vecmath.hpp:
 ../src/common.hpp:
 /usr/include/c++/11/ranges:
 /usr/include/c++/11/concepts:
@@ -536,7 +538,6 @@
 /usr/include/c++/11/iostream:
 /usr/include/c++/11/istream:
 /usr/include/c++/11/bits/istream.tcc:
-../src/vecmath.hpp:
 ../src/constants.hpp:
 ../src/arithmetic.hpp:
 ../src/logging.hpp:

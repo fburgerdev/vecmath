@@ -20,7 +20,7 @@ namespace Math {
     auto transpose(const Mat<T, N, M>& mat) {
         Mat<T, M, N> out;
         for (uint n = 0; n < N; ++n) {
-            for (uint m = 0; m < N; ++m) {
+            for (uint m = 0; m < M; ++m) {
                 out.at(m, n) = mat.at(n, m);
             }
         }

@@ -1,26 +1,21 @@
 #pragma once
-// #include <...> (HPPMERGE)
-#include <ranges>
-#include <memory>
-#include <string>
-#include <string_view>
-#include <array>
-#include <vector>
-#include <stack>
-#include <queue>
-#include <deque>
-#include <unordered_set>
-#include <map>
-#include <set>
-#include <unordered_map>
-#include <functional>
-#include <optional>
-#include <iostream>
-#include <concepts>
-#include <cmath>
-// #include "..." (HPPMERGE)
-#include "beaver/beaver.hpp"
 // #include "common.hpp" (HPPMERGE)
+#include <ranges> 
+#include <memory> 
+#include <string> 
+#include <string_view> 
+#include <array> 
+#include <vector> 
+#include <stack> 
+#include <queue> 
+#include <deque> 
+#include <unordered_set> 
+#include <map> 
+#include <set> 
+#include <unordered_map> 
+#include <functional> 
+#include <optional> 
+#include <iostream> 
 namespace Math {
     namespace stdr = std::ranges;
     using address = std::size_t;
@@ -81,6 +76,7 @@ namespace Math {
 }
 // #include "logging.hpp" (HPPMERGE)
 #if defined(BEAVER_LOGGING)
+#include "beaver/beaver.hpp"
 #else
 #define LOG_TRACE(...)
 #define LOG_DEBUG(...)
@@ -92,6 +88,8 @@ namespace Math {
 #define ASSERT_MSG(...)
 #endif
 // #include "arithmetic.hpp" (HPPMERGE)
+#include <concepts> 
+#include <cmath> 
 namespace Math {
     using std::integral;
     using std::floating_point;
@@ -646,7 +644,7 @@ namespace Math {
     auto transpose(const Mat<T, N, M>& mat) {
         Mat<T, M, N> out;
         for (uint n = 0; n < N; ++n) {
-            for (uint m = 0; m < N; ++m) {
+            for (uint m = 0; m < M; ++m) {
                 out.at(m, n) = mat.at(n, m);
             }
         }

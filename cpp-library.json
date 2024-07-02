@@ -9,6 +9,8 @@
             "url": "https://github.com/fburgerdev/beaver"
         }
     ],
+    "defines": [
+    ],
     "tests": [
         {
             "name": "test",
