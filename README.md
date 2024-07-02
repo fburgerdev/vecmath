@@ -1,7 +1,7 @@
 # vecmath
 >C++ header-only library for vector and matrix math
 
-This project provides the following functionality:
+This project provides the following functionalities:
 - constanst (_PI_, _EULER_, _GOLEN_RATIO_, ...)
 - arithmetic (_abs_, _floor_, _ceil_, _exp_, _max_, ...)
 - vector and matrix math (_Vec<T, N, M>_, _Mat<T, N, M>_)
