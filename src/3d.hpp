@@ -24,14 +24,14 @@ namespace Math {
         T sinz = sin(euler_rotation.z);
         T cosz = cos(euler_rotation.z);
         // roll -> pitch -> yaw (ccw)
-        mat.at(0, 0) = cosy * cosz - sinx * siny * sinz;
-        mat.at(0, 1) = sinx * siny * cosz + cosy * sinz;
-        mat.at(0, 2) = -cosx * siny;
-        mat.at(1, 0) = -cosx * sinz;
+        mat.at(0, 0) = cosy * cosz + sinx * siny * sinz;
+        mat.at(0, 1) = sinx * siny * cosz - cosy * sinz;
+        mat.at(0, 2) = cosx * siny;
+        mat.at(1, 0) = cosx * sinz;
         mat.at(1, 1) = cosx * cosz;
-        mat.at(1, 2) = sinx;
-        mat.at(2, 0) = siny * cosz + sinx * cosy * sinz;
-        mat.at(2, 1) = -sinx * cosy * cosz + siny * sinz;
+        mat.at(1, 2) = -sinx;
+        mat.at(2, 0) = -siny * cosz + sinx * cosy * sinz;
+        mat.at(2, 1) = sinx * cosy * cosz + siny * sinz;
         mat.at(2, 2) = cosx * cosy;
         return mat;
     }
@@ -67,7 +67,7 @@ namespace Math {
         Mat4<T> mat;
         // clip x, y
         mat.at(0, 0) = 1.0 / tan(fov / 2);
-        mat.at(1, 1) = -aspectRatio / tan(fov / 2); // (negation is OPENGL specific since y-axis is inverted)
+        mat.at(1, 1) = aspectRatio / tan(fov / 2); // (negation is OPENGL specific since y-axis is inverted)
         // clip z to [-1, 1] (OPENGL specific)
         mat.at(2, 2) = 2 * zFar / (zFar - zNear) - 1;
         mat.at(2, 3) = -2 * zNear * zFar / (zFar - zNear);

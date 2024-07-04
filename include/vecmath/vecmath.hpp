@@ -753,14 +753,14 @@ namespace Math {
         T cosy = cos(euler_rotation.y);
         T sinz = sin(euler_rotation.z);
         T cosz = cos(euler_rotation.z);
-        mat.at(0, 0) = cosy * cosz - sinx * siny * sinz;
-        mat.at(0, 1) = sinx * siny * cosz + cosy * sinz;
-        mat.at(0, 2) = -cosx * siny;
-        mat.at(1, 0) = -cosx * sinz;
+        mat.at(0, 0) = cosy * cosz + sinx * siny * sinz;
+        mat.at(0, 1) = sinx * siny * cosz - cosy * sinz;
+        mat.at(0, 2) = cosx * siny;
+        mat.at(1, 0) = cosx * sinz;
         mat.at(1, 1) = cosx * cosz;
-        mat.at(1, 2) = sinx;
-        mat.at(2, 0) = siny * cosz + sinx * cosy * sinz;
-        mat.at(2, 1) = -sinx * cosy * cosz + siny * sinz;
+        mat.at(1, 2) = -sinx;
+        mat.at(2, 0) = -siny * cosz + sinx * cosy * sinz;
+        mat.at(2, 1) = sinx * cosy * cosz + siny * sinz;
         mat.at(2, 2) = cosx * cosy;
         return mat;
     }
@@ -790,7 +790,7 @@ namespace Math {
     auto PerspectiveMatrix(T fov, T aspectRatio, T zNear, T zFar) {
         Mat4<T> mat;
         mat.at(0, 0) = 1.0 / tan(fov / 2);
-        mat.at(1, 1) = -aspectRatio / tan(fov / 2); 
+        mat.at(1, 1) = aspectRatio / tan(fov / 2); 
         mat.at(2, 2) = 2 * zFar / (zFar - zNear) - 1;
         mat.at(2, 3) = -2 * zNear * zFar / (zFar - zNear);
         mat.at(3, 2) = 1;
