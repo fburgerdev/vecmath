@@ -787,12 +787,12 @@ namespace Math {
         return out;
     }
     template<floating_point T>
-    auto PerspectiveMatrix(Vec2<T> zRange, T FoV, T aspect_ratio) {
+    auto PerspectiveMatrix(T fov, T aspectRatio, T zNear, T zFar) {
         Mat4<T> mat;
-        mat.at(0, 0) = 1.0 / tan(FoV / 2);
-        mat.at(1, 1) = -aspect_ratio / tan(FoV / 2); 
-        mat.at(2, 2) = 2 * zRange.y / (zRange.y - zRange.x) - 1;
-        mat.at(2, 3) = -2 * zRange.x * zRange.y / (zRange.y - zRange.x);
+        mat.at(0, 0) = 1.0 / tan(fov / 2);
+        mat.at(1, 1) = -aspectRatio / tan(fov / 2); 
+        mat.at(2, 2) = 2 * zFar / (zFar - zNear) - 1;
+        mat.at(2, 3) = -2 * zNear * zFar / (zFar - zNear);
         mat.at(3, 2) = 1;
         return mat;
     }
