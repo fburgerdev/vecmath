@@ -776,14 +776,14 @@ namespace Math {
     auto ModelMatrix(Vec3<T> position, Vec3<T> rotation, Vec3<T> scale) {
         Mat4<T> out;
         out.insert(ScaleMatrix(scale) * RotationMatrix(rotation), { 0, 0 });
-        out.insert(Vec4<T>(position, 1), { 3, 0 });
+        out.insert(Vec4<T>(position, 1), { 0, 3 });
         return out;
     }
     template<floating_point T>
     auto ViewMatrix(Vec3<T> position, Vec3<T> rotation) {
         Mat4<T> out;
         out.insert(transpose(RotationMatrix(rotation)), { 0, 0 });
-        out.insert(Vec4<T>(-position, 1), { 3, 0 });
+        out.insert(Vec4<T>(-position, 1), { 0, 3 });
         return out;
     }
     template<floating_point T>

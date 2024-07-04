@@ -11,6 +11,8 @@ workspace "vecmath"
    cppdialect "C++Latest"
    -- debug
    debugger "GDB"
+   -- defines
+   defines {  }
    -- config
    -- config :: debug
    filter "configurations:debug"
@@ -40,6 +42,7 @@ project "vecmath"
    -- files
    files {
       ROOT .. "/src/**",
+      ROOT .. "/vendor/**",
    }
    -- binaries
    targetdir(ROOT .. "/lib/%{cfg.buildcfg}")
