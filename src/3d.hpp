@@ -45,7 +45,7 @@ namespace Math {
         });
     }
 
-    // world space -> camera space
+    // local space -> world space
     template<floating_point T>
     auto ModelMatrix(Vec3<T> position, Vec3<T> rotation, Vec3<T> scale) {
         Mat4<T> out;
@@ -53,7 +53,7 @@ namespace Math {
         out.insert(Vec4<T>(position, 1), { 3, 0 });
         return out;
     }
-    // camera space -> local space
+    // world space -> view space
     template<floating_point T>
     auto ViewMatrix(Vec3<T> position, Vec3<T> rotation) {
         Mat4<T> out;
@@ -61,16 +61,16 @@ namespace Math {
         out.insert(Vec4<T>(-position, 1), { 3, 0 });
         return out;
     }
-    // local space -> clip space (OPENGL specific)
+    // view space -> clip space (OPENGL specific)
     template<floating_point T>
-    auto PerspectiveMatrix(Vec2<T> zRange, T FoV, T aspect_ratio) {
+    auto PerspectiveMatrix(T fov, T aspectRatio, T zNear, T zFar) {
         Mat4<T> mat;
         // clip x, y
-        mat.at(0, 0) = 1.0 / tan(FoV / 2);
-        mat.at(1, 1) = -aspect_ratio / tan(FoV / 2); // (negation is OPENGL specific since y-axis is inverted)
+        mat.at(0, 0) = 1.0 / tan(fov / 2);
+        mat.at(1, 1) = -aspectRatio / tan(fov / 2); // (negation is OPENGL specific since y-axis is inverted)
         // clip z to [-1, 1] (OPENGL specific)
-        mat.at(2, 2) = 2 * zRange.y / (zRange.y - zRange.x) - 1;
-        mat.at(2, 3) = -2 * zRange.x * zRange.y / (zRange.y - zRange.x);
+        mat.at(2, 2) = 2 * zFar / (zFar - zNear) - 1;
+        mat.at(2, 3) = -2 * zNear * zFar / (zFar - zNear);
         mat.at(3, 2) = 1;
         return mat;
     }
