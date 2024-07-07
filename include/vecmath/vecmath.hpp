@@ -781,10 +781,11 @@ namespace Math {
     }
     template<floating_point T>
     auto ViewMatrix(Vec3<T> position, Vec3<T> rotation) {
-        Mat4<T> out;
-        out.insert(transpose(RotationMatrix(rotation)), { 0, 0 });
-        out.insert(Vec4<T>(-position, 1), { 0, 3 });
-        return out;
+        Mat4<T> rotate = Identity<T, 4>();
+        rotate.insert(transpose(RotationMatrix(rotation)), { 0, 0 });
+        Mat4<T> translate = Identity<T, 4>();
+        translate.insert(Vec4<T>(-position, 1), { 0, 3 });
+        return rotate * translate;
     }
     template<floating_point T>
     auto PerspectiveMatrix(T fov, T aspectRatio, T zNear, T zFar) {
