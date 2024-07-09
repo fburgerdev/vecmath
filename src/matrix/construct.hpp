@@ -2,14 +2,25 @@
 #include "struct.hpp"
 
 namespace Math {
-    // identity
+    // Zero
+    template<typename T, uint N, uint M = N>
+    auto Zero() {
+        Mat<T, N, M> mat;
+        for (uint row = 0; row < N; ++row) {
+            for (uint col = 0; col < M; ++col) {
+                mat.at(row, col) = T(0);
+            }
+        }
+        return mat;
+    }
+    // Identity
     template<typename T, uint N>
     auto Identity() {
-        Mat<T, N, N> out;
+        auto mat = Zero<T, N>();
         for (uint n = 0; n < N; ++n) {
-            out.at(n, n) = T(1);
+            mat.at(n, n) = T(1);
         }
-        return out;
+        return mat;
     }
     // insert
     template<typename T, uint N, uint M>

@@ -7,11 +7,7 @@ namespace Math {
     class Mat {
     public:
         // constructor
-        Mat() {
-            for (uint i = 0; i < N * M; ++i) {
-                m_Data[i] = (T)0;
-            } 
-        }
+        Mat() = default;
         Mat(T (&values)[N * M]) {
             for (uint i = 0; i < N * M; ++i) {
                 m_Data[i] = values[i];
@@ -79,8 +75,7 @@ namespace Math {
     class Mat<T, 2, 1> {
     public:
         // constructor
-        Mat()
-            : Mat((T)0) {}
+        Mat() = default;
         Mat(T value)
             : Mat(value, value) {}
         Mat(T x, T y)
@@ -124,8 +119,7 @@ namespace Math {
     class Mat<T, 3, 1> {
     public:
         // constructor
-        Mat()
-            : Mat((T)0) {}
+        Mat() = default;
         Mat(T value)
             : Mat(value, value, value) {}
         Mat(T x, T y, T z)
@@ -173,8 +167,7 @@ namespace Math {
     class Mat<T, 4, 1> {
     public:
         // constructor
-        Mat()
-            : Mat((T)0) {}
+        Mat() = default;
         Mat(T value)
             : Mat(value, value, value, value) {}
         Mat(T x, T y, T z, T w)

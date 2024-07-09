@@ -215,11 +215,7 @@ namespace Math {
     template<typename T, uint N, uint M = N>
     class Mat {
     public:
-        Mat() {
-            for (uint i = 0; i < N * M; ++i) {
-                m_Data[i] = (T)0;
-            } 
-        }
+        Mat() = default;
         Mat(T (&values)[N * M]) {
             for (uint i = 0; i < N * M; ++i) {
                 m_Data[i] = values[i];
@@ -280,8 +276,7 @@ namespace Math {
     template<typename T>
     class Mat<T, 2, 1> {
     public:
-        Mat()
-            : Mat((T)0) {}
+        Mat() = default;
         Mat(T value)
             : Mat(value, value) {}
         Mat(T x, T y)
@@ -318,8 +313,7 @@ namespace Math {
     template<typename T>
     class Mat<T, 3, 1> {
     public:
-        Mat()
-            : Mat((T)0) {}
+        Mat() = default;
         Mat(T value)
             : Mat(value, value, value) {}
         Mat(T x, T y, T z)
@@ -360,8 +354,7 @@ namespace Math {
     template<typename T>
     class Mat<T, 4, 1> {
     public:
-        Mat()
-            : Mat((T)0) {}
+        Mat() = default;
         Mat(T value)
             : Mat(value, value, value, value) {}
         Mat(T x, T y, T z, T w)
@@ -410,13 +403,23 @@ namespace Math {
 }
 // #include "construct.hpp" (HPPMERGE)
 namespace Math {
+    template<typename T, uint N, uint M = N>
+    auto Zero() {
+        Mat<T, N, M> mat;
+        for (uint row = 0; row < N; ++row) {
+            for (uint col = 0; col < M; ++col) {
+                mat.at(row, col) = T(0);
+            }
+        }
+        return mat;
+    }
     template<typename T, uint N>
     auto Identity() {
-        Mat<T, N, N> out;
+        auto mat = Zero<T, N>();
         for (uint n = 0; n < N; ++n) {
-            out.at(n, n) = T(1);
+            mat.at(n, n) = T(1);
         }
-        return out;
+        return mat;
     }
     template<typename T, uint N, uint M>
     template<typename U, uint N2, uint M2>
