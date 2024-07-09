@@ -75,7 +75,7 @@ namespace Math {
     // operator* (product matrix)
     template<typename T, uint N, uint M, uint L>
     auto operator*(const Mat<T, N, M>& mat1, const Mat<T, M, L>& mat2) {
-        Mat<T, N, L> out;
+        auto out = Zero<T, N, L>();
         for (uint n = 0; n < N; ++n) {
             for (uint l = 0; l < L; ++l) {
                 for (uint m = 0; m < M; ++m) {
