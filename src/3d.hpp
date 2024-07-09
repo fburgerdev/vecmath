@@ -48,7 +48,7 @@ namespace Math {
     // local space -> world space
     template<floating_point T>
     auto ModelMatrix(Vec3<T> position, Vec3<T> rotation, Vec3<T> scale) {
-        Mat4<T> out;
+        auto out = Zero<T, 4>();
         out.insert(ScaleMatrix(scale) * RotationMatrix(rotation), { 0, 0 });
         out.insert(Vec4<T>(position, 1), { 0, 3 });
         return out;
@@ -65,7 +65,7 @@ namespace Math {
     // view space -> clip space (OPENGL specific)
     template<floating_point T>
     auto PerspectiveMatrix(T fov, T aspectRatio, T zNear, T zFar) {
-        Mat4<T> mat;
+        auto mat = Zero<T, 4>();
         // clip x, y
         mat.at(0, 0) = 1.0 / tan(fov / 2);
         mat.at(1, 1) = aspectRatio / tan(fov / 2); // (negation is OPENGL specific since y-axis is inverted)
